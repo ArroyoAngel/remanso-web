@@ -1,0 +1,146 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>YaYa Driver – Remanso Studio</title>
+<meta name="description" content="YaYa Driver: delivery, taxi y transporte de carga en una sola app, para pueblos y ciudades de Bolivia. En desarrollo; empieza en San Julián, Santa Cruz.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%231B2A47'/%3E%3Ctext x='32' y='44' font-family='system-ui,sans-serif' font-size='30' font-weight='900' font-style='italic' fill='%23F56300' text-anchor='middle'%3EYa!%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:ital,wght@0,800;0,900;1,900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --navy: #1B2A47; --ink: #111418; --muted: #4B5563; --ground: #F4F5F7; --line: #E5E7EB;
+    --delivery: #F56300; --taxi: #2563EB; --carga: #059669; --lineas: #7C3AED; --encomiendas: #A0412D;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--ground); color: var(--ink); font: 17px/1.55 'Atkinson Hyperlegible', system-ui, sans-serif; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+  h1, h2, h3, .logo { font-family: Nunito, system-ui, sans-serif; }
+
+  header { background: var(--navy); color: #fff; padding: 28px 0 64px; position: relative; overflow: hidden; }
+  header .blob { position: absolute; border-radius: 50%; opacity: .14; animation: float 7s ease-in-out infinite alternate; }
+  @keyframes float { from { transform: translate(0, 0); } to { transform: translate(-30px, 24px); } }
+  @media (prefers-reduced-motion: reduce) { header .blob { animation: none; } }
+  .top { display: flex; justify-content: space-between; align-items: center; position: relative; }
+  .top a { color: #C7D2E3; font-size: 15px; text-decoration: none; }
+  .top a:hover { color: #fff; }
+  .logo { font-weight: 900; font-style: italic; letter-spacing: -2px; line-height: 1; }
+  .logo .a { color: #fff; } .logo .b { color: var(--delivery); }
+  .hero { position: relative; margin-top: 48px; }
+  .hero .logo { font-size: clamp(64px, 16vw, 112px); }
+  .hero h1 { font-size: clamp(28px, 5.5vw, 44px); line-height: 1.12; margin: 18px 0 0; max-width: 720px; font-weight: 900; }
+  .badge { display: inline-block; margin-top: 22px; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,.12); color: #fff; font-weight: 700; font-size: 15px; }
+
+  main { padding: 48px 0 24px; }
+  section { margin-bottom: 52px; }
+  h2 { font-size: 28px; font-weight: 900; margin: 0 0 18px; }
+  .services { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .svc { border-radius: 20px; padding: 20px; color: #fff; min-height: 170px; display: flex; flex-direction: column; gap: 6px; }
+  .svc h3 { margin: 0; font-size: 24px; font-weight: 900; }
+  .svc p { margin: 0; opacity: .95; }
+  .svc .when { margin-top: auto; align-self: flex-start; padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,.2); font-size: 14px; font-weight: 700; }
+  .svc.later { background: #fff; color: var(--ink); border: 2px solid var(--line); }
+  .svc.later .when { background: var(--line); color: #1F2937; }
+
+  .who { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+  .card { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 20px; }
+  .card h3 { margin: 0 0 6px; font-size: 21px; font-weight: 900; }
+  .card p { margin: 0; color: var(--muted); }
+
+  .city { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 24px; }
+  .city p { margin: 0; color: var(--muted); }
+  .city strong { color: var(--ink); }
+
+  footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--muted); font-size: 15px; }
+  footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
+  footer a { color: var(--navy); }
+  footer .guest { color: #9CA3AF; text-decoration: none; font-size: 14px; }
+  footer .guest:hover { color: var(--muted); text-decoration: underline; }
+</style>
+</head>
+<body>
+<header>
+  <span class="blob" style="width:320px;height:320px;background:var(--delivery);top:-120px;right:-80px"></span>
+  <span class="blob" style="width:220px;height:220px;background:var(--taxi);bottom:-110px;left:-60px;animation-duration:9s"></span>
+  <div class="wrap">
+    <div class="top">
+      <span class="logo" style="font-size:30px"><span class="a">Ya</span><span class="b">Ya!</span></span>
+      <a href="/">Remanso Studio</a>
+    </div>
+    <div class="hero">
+      <h1>Comida, taxi y camión en tu ciudad, desde una sola app.</h1>
+      <span class="badge">En desarrollo · empieza en San Julián, Santa Cruz</span>
+    </div>
+  </div>
+</header>
+
+<main>
+  <div class="wrap">
+    <section>
+      <h2>Lo que vas a poder pedir</h2>
+      <div class="services">
+        <div class="svc" style="background:var(--delivery)">
+          <h3>Delivery</h3>
+          <p>Comida, farmacias y mercados de tu zona, con un repartidor que te lo lleva.</p>
+          <span class="when">Al lanzar</span>
+        </div>
+        <div class="svc" style="background:var(--taxi)">
+          <h3>Taxi</h3>
+          <p>Mototaxi, torito o auto. Ofrecés tu precio, pedís al instante o reservás para más tarde.</p>
+          <span class="when">Al lanzar</span>
+        </div>
+        <div class="svc" style="background:var(--carga)">
+          <h3>Transporte de carga</h3>
+          <p>Publicás lo que querés mover y los transportistas te hacen su oferta.</p>
+          <span class="when">Al lanzar</span>
+        </div>
+        <div class="svc later">
+          <h3 style="color:var(--lineas)">Líneas</h3>
+          <p>Micros e interurbanos: reservás tu asiento y sabés cuándo sale.</p>
+          <span class="when">Después del lanzamiento</span>
+        </div>
+        <div class="svc later">
+          <h3 style="color:var(--encomiendas)">Encomiendas</h3>
+          <p>Paquetes en tu ciudad o a otra, de mano en mano y con código de entrega.</p>
+          <span class="when">Después del lanzamiento</span>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Para todos los que mueven la ciudad</h2>
+      <div class="who">
+        <div class="card">
+          <h3>Clientes</h3>
+          <p>Una sola cuenta y una sola libreta de direcciones para todo. También se puede pedir por WhatsApp.</p>
+        </div>
+        <div class="card">
+          <h3>Conductores</h3>
+          <p>Repartidores, mototaxistas y camioneros trabajan desde la misma app, en los servicios que permite su vehículo.</p>
+        </div>
+        <div class="card">
+          <h3>Negocios</h3>
+          <p>Restaurantes y tiendas reciben sus pedidos desde el navegador del celular, sin instalar nada más.</p>
+        </div>
+        <div class="card">
+          <h3>Sindicatos y asociaciones</h3>
+          <p>Manejan sus conductores, turnos y rutas desde su propio panel.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="city">
+      <p><strong>Hecha para pueblos y ciudades de Bolivia.</strong> Empieza en San Julián, Santa Cruz, y está pensada para sumar más ciudades. Todavía no está publicada: estamos terminando los diseños con gente de la zona.</p>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap row">
+    <span>YaYa Driver es una app de <a href="/">Remanso Studio</a> · <a href="mailto:arroyoalangel@gmail.com">arroyoalangel@gmail.com</a></span>
+    <a class="guest" href="https://pruebas.remanso.info">Acceso para invitados</a>
+  </div>
+</footer>
+</body>
+</html>

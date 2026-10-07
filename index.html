@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Remanso Studio</title>
 <meta name="description" content="Remanso Studio: apps sencillas para el trabajo de todos los días, hechas en Bolivia.">
-<link rel="icon" href="mi-estanque/icono.png">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316525F'/%3E%3Ctext x='32' y='45' font-family='system-ui,sans-serif' font-size='38' font-weight='700' fill='%23fff' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
 <style>
   :root { --ink: #0F2233; --muted: #4B5A66; --primary: #16525F; --soft: #DDEFEC; --ground: #F4F3EF; --line: #D8D6CF; }
   * { box-sizing: border-box; }
@@ -17,8 +17,11 @@
   main { padding: 40px 20px 64px; }
   h2 { font-size: 24px; margin: 0 0 16px; }
   .app { display: flex; gap: 20px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 20px; color: inherit; text-decoration: none; }
+  .app .logo { width: 88px; height: 88px; border-radius: 22px; flex-shrink: 0; background: #1B2A47; display: grid; place-items: center; font: italic 900 25px/1 system-ui, sans-serif; letter-spacing: -1px; }
+  .app .logo .a { color: #fff; } .app .logo .b { color: #F56300; }
   .app:hover { border-color: var(--primary); }
-  .app img { width: 88px; height: 88px; border-radius: 22px; flex-shrink: 0; }
+  .app h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
+  .tag { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--soft); color: var(--primary); font-size: 14px; font-weight: 700; vertical-align: middle; }
   .app h3 { margin: 0; font-size: 22px; }
   .app p { margin: 4px 0 0; color: var(--muted); }
   footer { padding: 24px 20px 40px; color: var(--muted); font-size: 15px; }
@@ -35,11 +38,11 @@
 <main>
   <div class="wrap">
     <h2>Nuestras apps</h2>
-    <a class="app" href="mi-estanque/">
-      <img src="mi-estanque/icono.png" alt="">
+    <a class="app" href="yaya/">
+      <div class="logo" aria-hidden="true"><span><span class="a">Ya</span><span class="b">Ya!</span></span></div>
       <div>
-        <h3>Mi Estanque</h3>
-        <p>Calculadora piscícola para pacú y tambaquí: biometría, ración diaria y FCA. Funciona sin internet.</p>
+        <h3>YaYa Driver <span class="tag">En desarrollo</span></h3>
+        <p>Delivery, taxi y transporte de carga en una sola app, para pueblos y ciudades de Bolivia. Empieza en San Julián, Santa Cruz.</p>
       </div>
     </a>
   </div>
