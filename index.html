@@ -6,49 +6,266 @@
 <title>Remanso Studio</title>
 <meta name="description" content="Remanso Studio: apps sencillas para el trabajo de todos los días, hechas en Bolivia.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2316525F'/%3E%3Ctext x='32' y='45' font-family='system-ui,sans-serif' font-size='38' font-weight='700' fill='%23fff' text-anchor='middle'%3ER%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Nunito:ital,wght@0,800;0,900;1,900&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          ink: '#0F2233', muted: '#4B5A66', primary: '#16525F', mint: '#3CC7B4', soft: '#DDEFEC',
+          ground: '#F4F3EF', line: '#D8D6CF', navy: '#1B2A47', orange: '#F56300'
+        },
+        fontFamily: {
+          display: ['Nunito', 'system-ui', 'sans-serif'],
+          body: ['"Atkinson Hyperlegible"', 'system-ui', 'sans-serif']
+        }
+      }
+    }
+  }
+</script>
 <style>
-  :root { --ink: #0F2233; --muted: #4B5A66; --primary: #16525F; --soft: #DDEFEC; --ground: #F4F3EF; --line: #D8D6CF; }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--ground); color: var(--ink); font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  header { background: var(--ink); color: #fff; padding: 56px 20px 64px; }
-  .wrap { max-width: 880px; margin: 0 auto; }
-  h1 { margin: 0; font-size: clamp(36px, 7vw, 56px); line-height: 1.05; letter-spacing: -0.5px; }
-  header p { margin: 12px 0 0; font-size: 20px; color: #9FDCD2; }
-  main { padding: 40px 20px 64px; }
-  h2 { font-size: 24px; margin: 0 0 16px; }
-  .app { display: flex; gap: 20px; align-items: center; background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 20px; color: inherit; text-decoration: none; }
-  .app .logo { width: 88px; height: 88px; border-radius: 22px; flex-shrink: 0; background: #1B2A47; display: grid; place-items: center; font: italic 900 25px/1 system-ui, sans-serif; letter-spacing: -1px; }
-  .app .logo .a { color: #fff; } .app .logo .b { color: #F56300; }
-  .app:hover { border-color: var(--primary); }
-  .app h3 { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 10px; }
-  .tag { display: inline-block; padding: 2px 10px; border-radius: 999px; background: var(--soft); color: var(--primary); font-size: 14px; font-weight: 700; vertical-align: middle; }
-  .app h3 { margin: 0; font-size: 22px; }
-  .app p { margin: 4px 0 0; color: var(--muted); }
-  footer { padding: 24px 20px 40px; color: var(--muted); font-size: 15px; }
-  footer a { color: var(--primary); }
+  /* Claymorphism: volumen suave con sombra interior */
+  .clay { box-shadow: inset 0 -6px 0 rgba(15,34,51,.06), inset 0 2px 0 rgba(255,255,255,.8), 0 22px 40px -18px rgba(15,34,51,.28); }
+  .clay-dark { box-shadow: inset 0 -6px 0 rgba(0,0,0,.18), inset 0 2px 0 rgba(255,255,255,.08), 0 30px 60px -20px rgba(0,0,0,.5); }
+
+  /* Agua en calma: ondas que se abren despacio */
+  .ripple { transform-box: fill-box; transform-origin: center; animation: ripple 9s ease-out infinite; }
+  @keyframes ripple { from { transform: scale(.35); opacity: .7; } to { transform: scale(1); opacity: 0; } }
+
+  /* Piezas que flotan suave y siguen un poco al mouse */
+  .floaty { position: absolute; will-change: transform; transform: translate(var(--px, 0), var(--py, 0)); transition: transform .6s ease-out; }
+  .floaty > * { animation: bob var(--d, 7s) ease-in-out var(--delay, 0s) infinite alternate; }
+  @keyframes bob { to { transform: translateY(-12px); } }
+  .glass { background: rgba(255,255,255,.06); border: 1px solid rgba(255,255,255,.12); backdrop-filter: blur(8px); }
+
+  /* Brillos de fondo */
+  .glow { position: absolute; border-radius: 50%; filter: blur(70px); opacity: .35; animation: drift 12s ease-in-out infinite alternate; }
+  @keyframes drift { to { transform: translate(-40px, 30px) scale(1.1); } }
+
+  /* Aparecer al hacer scroll */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+  .reveal.in { opacity: 1; transform: none; }
+
+  .phone-tilt { transform: rotate(6deg); transition: transform .5s ease; }
+  .app-card:hover .phone-tilt { transform: rotate(0deg) translateY(-8px); }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    .reveal { opacity: 1; transform: none; }
+  }
 </style>
 </head>
-<body>
-<header>
-  <div class="wrap">
-    <h1>Remanso Studio</h1>
-    <p>Apps sencillas para el trabajo de todos los días, hechas en Bolivia.</p>
+<body class="bg-ground text-ink font-body text-[17px] leading-relaxed antialiased">
+
+<!-- ============ HERO ============ -->
+<header class="relative overflow-hidden bg-ink text-white">
+  <span class="glow" style="width:420px;height:420px;background:#16525F;top:-120px;left:-120px"></span>
+  <span class="glow" style="width:380px;height:380px;background:#3CC7B4;bottom:-60px;right:-80px;animation-duration:15s;opacity:.18"></span>
+
+  <nav class="relative mx-auto flex max-w-6xl items-center justify-between px-4 pt-6 sm:px-6">
+    <a href="/" class="flex items-center gap-3 no-underline">
+      <span class="grid h-11 w-11 place-items-center rounded-2xl bg-primary font-display text-2xl font-black clay-dark">R</span>
+      <span class="font-display text-xl font-black tracking-tight">Remanso Studio</span>
+    </a>
+    <div class="hidden items-center gap-8 text-[15px] text-slate-300 sm:flex">
+      <a href="#apps" class="hover:text-white">Apps</a>
+      <a href="#como" class="hover:text-white">Cómo trabajamos</a>
+      <a href="#contacto" class="rounded-full bg-white/10 px-4 py-2 font-bold text-white hover:bg-white/20">Contacto</a>
+    </div>
+  </nav>
+
+  <div class="relative mx-auto grid max-w-6xl items-center gap-6 px-4 pb-28 pt-10 sm:px-6 md:grid-cols-2 md:pb-36 md:pt-16">
+    <div class="reveal">
+      <span class="inline-flex items-center gap-2 rounded-full bg-white/10 px-4 py-1.5 text-sm font-bold text-[#9FDCD2]">
+        <span class="h-2 w-2 rounded-full bg-mint"></span> Estudio de apps · Bolivia
+      </span>
+      <h1 class="mt-5 font-display text-[clamp(38px,6.5vw,64px)] font-black leading-[1.04] tracking-tight">
+        Apps <span class="relative inline-block whitespace-nowrap text-[#9FDCD2]">sencillas<svg class="absolute -bottom-1 left-0 h-3 w-full" viewBox="0 0 200 12" preserveAspectRatio="none" aria-hidden="true"><path d="M2 9 Q50 1 100 7 T198 5" fill="none" stroke="#3CC7B4" stroke-width="4" stroke-linecap="round"/></svg></span>
+        para el trabajo de todos los días.
+      </h1>
+      <p class="mt-6 max-w-lg text-lg text-slate-300">
+        Diseñamos y construimos apps para pueblos y ciudades de Bolivia, fáciles de usar para cualquiera.
+      </p>
+      <div class="mt-8 flex flex-wrap gap-3">
+        <a href="#apps" class="rounded-2xl bg-white px-6 py-3.5 font-display text-lg font-black text-ink transition hover:-translate-y-0.5 hover:bg-soft">Ver nuestras apps</a>
+        <a href="#contacto" class="rounded-2xl border border-white/20 px-6 py-3.5 font-display text-lg font-black text-white transition hover:-translate-y-0.5 hover:bg-white/10">Escribinos</a>
+      </div>
+    </div>
+
+    <!-- Escena: agua en calma con nuestras apps flotando -->
+    <div class="relative mx-auto aspect-square w-full max-w-[480px]" id="scene" aria-hidden="true">
+      <svg class="absolute inset-0 h-full w-full" viewBox="0 0 400 400" fill="none">
+        <circle cx="200" cy="200" r="80" stroke="#9FDCD2" stroke-opacity=".14"/>
+        <circle cx="200" cy="200" r="130" stroke="#9FDCD2" stroke-opacity=".10"/>
+        <circle cx="200" cy="200" r="180" stroke="#9FDCD2" stroke-opacity=".06"/>
+        <circle class="ripple" cx="200" cy="200" r="190" stroke="#3CC7B4" stroke-width="1.5"/>
+        <circle class="ripple" cx="200" cy="200" r="190" stroke="#3CC7B4" stroke-width="1.5" style="animation-delay:-3s"/>
+        <circle class="ripple" cx="200" cy="200" r="190" stroke="#3CC7B4" stroke-width="1.5" style="animation-delay:-6s"/>
+      </svg>
+
+      <!-- Remanso al centro -->
+      <div class="floaty" data-depth="10" style="width:30%;left:35%;top:35%">
+        <div class="grid aspect-square place-items-center rounded-[28%] bg-primary clay-dark">
+          <span class="font-display text-[clamp(48px,8vw,80px)] font-black leading-none">R</span>
+        </div>
+      </div>
+
+      <!-- Nuestra app: YaYa -->
+      <div class="floaty" data-depth="-22" style="width:50%;right:0;top:6%;--d:8s;--delay:-2s">
+        <div class="glass flex items-center gap-3 rounded-2xl p-3.5">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-navy font-display text-[15px] font-black italic tracking-tighter"><span><span>Ya</span><span class="text-orange">Ya!</span></span></span>
+          <div class="min-w-0">
+            <span class="flex items-center gap-1.5 text-[11px] font-bold text-[#9FDCD2]"><span class="h-1.5 w-1.5 rounded-full bg-mint"></span>En desarrollo</span>
+            <p class="font-display text-base font-black leading-tight">YaYa Driver</p>
+            <p class="text-[11px] text-slate-400">5 servicios · San Julián</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Código -->
+      <div class="floaty" data-depth="18" style="width:22%;left:2%;top:14%;--d:9s;--delay:-4s">
+        <div class="glass grid aspect-square place-items-center rounded-2xl font-mono text-xl font-bold text-[#9FDCD2]">&lt;/&gt;</div>
+      </div>
+
+      <!-- Próxima app -->
+      <div class="floaty" data-depth="-14" style="width:20%;left:12%;bottom:8%;--d:7.5s;--delay:-1s">
+        <div class="grid aspect-square place-items-center rounded-[28%] border-2 border-dashed border-white/25 text-3xl font-light text-white/40">+</div>
+      </div>
+
+      <!-- Tarjeta de diseño -->
+      <div class="floaty" data-depth="26" style="width:36%;right:4%;bottom:10%;--d:8.5s;--delay:-3s">
+        <div class="glass rounded-2xl p-4">
+          <div class="flex gap-1.5"><span class="h-3 w-3 rounded-full bg-orange"></span><span class="h-3 w-3 rounded-full bg-[#2563EB]"></span><span class="h-3 w-3 rounded-full bg-[#059669]"></span><span class="h-3 w-3 rounded-full bg-[#7C3AED]"></span></div>
+          <div class="mt-3 h-2 w-4/5 rounded-full bg-white/20"></div>
+          <div class="mt-2 h-2 w-3/5 rounded-full bg-white/10"></div>
+        </div>
+      </div>
+    </div>
   </div>
+
+  <!-- Ola hacia la siguiente sección -->
+  <svg class="absolute bottom-0 left-0 w-full" viewBox="0 0 1440 90" preserveAspectRatio="none" aria-hidden="true" style="height:70px">
+    <path d="M0 50 C240 90 480 10 720 40 C960 70 1200 20 1440 45 V90 H0 Z" fill="#F4F3EF"/>
+  </svg>
 </header>
+
 <main>
-  <div class="wrap">
-    <h2>Nuestras apps</h2>
-    <a class="app" href="yaya/">
-      <div class="logo" aria-hidden="true"><span><span class="a">Ya</span><span class="b">Ya!</span></span></div>
+  <!-- ============ APPS ============ -->
+  <section id="apps" class="mx-auto max-w-6xl px-4 pb-16 pt-12 sm:px-6">
+    <div class="reveal">
+      <p class="font-display text-sm font-black uppercase tracking-widest text-primary">Nuestras apps</p>
+      <h2 class="mt-2 font-display text-[clamp(30px,4.5vw,44px)] font-black leading-tight tracking-tight">Lo que estamos construyendo</h2>
+    </div>
+
+    <a href="yaya/" class="app-card reveal mt-10 grid items-center gap-8 overflow-hidden rounded-[32px] bg-navy p-7 text-white no-underline clay-dark sm:p-10 md:grid-cols-[1.3fr_1fr]">
       <div>
-        <h3>YaYa Driver <span class="tag">En desarrollo</span></h3>
-        <p>Delivery, taxi y transporte de carga en una sola app, para pueblos y ciudades de Bolivia. Empieza en San Julián, Santa Cruz.</p>
+        <div class="flex flex-wrap items-center gap-3">
+          <span class="font-display text-5xl font-black italic tracking-tighter"><span>Ya</span><span class="text-orange">Ya!</span></span>
+          <span class="rounded-full bg-white/15 px-3 py-1 text-sm font-bold">En desarrollo</span>
+        </div>
+        <h3 class="mt-4 font-display text-[clamp(24px,3.4vw,34px)] font-black leading-tight">Cinco servicios para tu ciudad, desde una sola app.</h3>
+        <p class="mt-3 max-w-xl text-slate-300">Para pueblos y ciudades de Bolivia. Empieza en San Julián, Santa Cruz.</p>
+        <div class="mt-6 flex flex-wrap gap-2 text-sm font-bold">
+          <span class="rounded-full bg-[#2563EB] px-3 py-1">Taxi</span>
+          <span class="rounded-full bg-orange px-3 py-1">Delivery</span>
+          <span class="rounded-full bg-[#7C3AED] px-3 py-1">Líneas</span>
+          <span class="rounded-full bg-[#059669] px-3 py-1">Carga pesada</span>
+          <span class="rounded-full bg-[#A0412D] px-3 py-1">Encomiendas</span>
+        </div>
+        <span class="mt-8 inline-flex items-center gap-2 font-display text-lg font-black text-orange">Conocer YaYa Driver <span aria-hidden="true">→</span></span>
+      </div>
+      <div class="flex justify-center md:justify-end">
+        <div class="phone-tilt w-[220px] overflow-hidden rounded-[34px] border-[8px] border-[#0B1220] bg-[#0B1220] shadow-2xl">
+          <img src="yaya/pantallas/inicio.webp" alt="Pantalla de inicio de YaYa" width="390" height="844" class="block h-auto w-full">
+        </div>
       </div>
     </a>
-  </div>
+
+    <div class="reveal mt-6 flex flex-col items-start gap-2 rounded-[28px] border-2 border-dashed border-line p-7 sm:flex-row sm:items-center sm:justify-between">
+      <div>
+        <h3 class="font-display text-xl font-black">Más apps en camino</h3>
+        <p class="text-muted">¿Tenés un problema del día a día que una app podría resolver? Contanos.</p>
+      </div>
+      <a href="#contacto" class="shrink-0 font-display font-black text-primary hover:underline">Proponer una idea →</a>
+    </div>
+  </section>
+
+  <!-- ============ CÓMO TRABAJAMOS ============ -->
+  <section id="como" class="mx-auto max-w-6xl px-4 py-16 sm:px-6">
+    <div class="reveal">
+      <p class="font-display text-sm font-black uppercase tracking-widest text-primary">Cómo trabajamos</p>
+      <h2 class="mt-2 font-display text-[clamp(30px,4.5vw,44px)] font-black leading-tight tracking-tight">Pensadas para la gente de acá</h2>
+    </div>
+    <div class="mt-10 grid gap-5 md:grid-cols-3">
+      <div class="reveal rounded-[28px] bg-white p-7 clay transition hover:-translate-y-1">
+        <div class="grid h-14 w-14 place-items-center rounded-2xl bg-soft">
+          <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="#16525F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg>
+        </div>
+        <h3 class="mt-5 font-display text-2xl font-black">Hechas en Bolivia</h3>
+        <p class="mt-2 text-muted">Pensamos en cómo se vive y se trabaja en nuestros pueblos y ciudades.</p>
+      </div>
+      <div class="reveal rounded-[28px] bg-white p-7 clay transition hover:-translate-y-1" style="transition-delay:.1s">
+        <div class="grid h-14 w-14 place-items-center rounded-2xl bg-[#FFE7D6]">
+          <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="#F56300" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="2" width="12" height="20" rx="3"/><path d="M11 18h2"/></svg>
+        </div>
+        <h3 class="mt-5 font-display text-2xl font-black">Simples de usar</h3>
+        <p class="mt-2 text-muted">Pantallas claras, letras grandes y pocos pasos para hacer lo que necesitás.</p>
+      </div>
+      <div class="reveal rounded-[28px] bg-white p-7 clay transition hover:-translate-y-1" style="transition-delay:.2s">
+        <div class="grid h-14 w-14 place-items-center rounded-2xl bg-[#E0E9FF]">
+          <svg viewBox="0 0 24 24" class="h-7 w-7" fill="none" stroke="#2563EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M16 14.2a5 5 0 0 1 5.5 4.8"/></svg>
+        </div>
+        <h3 class="mt-5 font-display text-2xl font-black">Diseñadas con la gente</h3>
+        <p class="mt-2 text-muted">Probamos los diseños con quienes las van a usar antes de lanzarlas.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CONTACTO ============ -->
+  <section id="contacto" class="mx-auto max-w-6xl px-4 pb-20 pt-8 sm:px-6">
+    <div class="reveal relative overflow-hidden rounded-[32px] bg-primary px-7 py-12 text-center text-white clay-dark sm:px-12">
+      <span class="glow" style="width:260px;height:260px;background:#3CC7B4;top:-100px;right:-60px;opacity:.4"></span>
+      <h2 class="relative font-display text-[clamp(28px,4.5vw,42px)] font-black leading-tight">¿Hablamos?</h2>
+      <p class="relative mx-auto mt-3 max-w-xl text-[#C9EDE7]">Si tenés un negocio, una asociación o una idea, escribinos y te respondemos.</p>
+      <a href="mailto:arroyoalangel@gmail.com" class="relative mt-8 inline-block rounded-2xl bg-white px-7 py-4 font-display text-lg font-black text-primary clay transition hover:-translate-y-0.5">arroyoalangel@gmail.com</a>
+    </div>
+  </section>
 </main>
-<footer>
-  <div class="wrap">© 2026 Remanso Studio · <a href="mailto:arroyoalangel@gmail.com">arroyoalangel@gmail.com</a></div>
+
+<footer class="border-t border-line">
+  <div class="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-8 text-[15px] text-muted sm:px-6">
+    <span>© <span id="year">2026</span> Remanso Studio · Hecho en Bolivia</span>
+    <a href="mailto:arroyoalangel@gmail.com" class="text-primary hover:underline">arroyoalangel@gmail.com</a>
+  </div>
 </footer>
+
+<script>
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Aparecer al hacer scroll
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+  }), { threshold: 0.15 });
+  document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+  // La comida se mueve un poco con el mouse
+  const scene = document.getElementById('scene');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (scene && !still) {
+    const items = scene.querySelectorAll('.floaty');
+    scene.closest('header').addEventListener('pointermove', e => {
+      const r = scene.getBoundingClientRect();
+      const x = (e.clientX - (r.left + r.width / 2)) / r.width;
+      const y = (e.clientY - (r.top + r.height / 2)) / r.height;
+      items.forEach(el => {
+        const d = Number(el.dataset.depth) || 0;
+        el.style.setProperty('--px', (x * d).toFixed(1) + 'px');
+        el.style.setProperty('--py', (y * d).toFixed(1) + 'px');
+      });
+    });
+  }
+</script>
 </body>
 </html>

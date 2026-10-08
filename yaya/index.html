@@ -29,23 +29,22 @@
   .logo .a { color: #fff; } .logo .b { color: var(--delivery); }
   .hero { position: relative; margin-top: 40px; display: flex; align-items: center; gap: 40px; flex-wrap: wrap; }
   .hero .text { flex: 1 1 420px; min-width: 0; }
-  .phone { flex: 0 0 auto; width: 260px; margin: 0 auto; border-radius: 38px; border: 9px solid #0B1220; background: #0B1220; box-shadow: 0 30px 60px rgba(0,0,0,.35); overflow: hidden; }
-  .phone img { display: block; width: 100%; height: auto; }
   header { padding-bottom: 56px; }
-  @media (max-width: 760px) { .phone { width: 230px; } }
 
-  .steps { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 14px; counter-reset: step; }
-  .step { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 20px; }
-  .step .n { width: 40px; height: 40px; border-radius: 50%; background: var(--navy); color: #fff; display: grid; place-items: center; font: 900 20px Nunito, sans-serif; margin-bottom: 10px; }
-  .step h3 { margin: 0 0 4px; font-size: 21px; font-weight: 900; }
-  .step p { margin: 0; color: var(--muted); }
+  /* Portada: el equipo YaYa! */
+  .equipo { position: relative; flex: 0 1 440px; width: 100%; max-width: 440px; aspect-ratio: 1; margin: 0 auto; }
+  .equipo .p { position: absolute; bottom: 0; height: auto; opacity: 0; transform: translateY(14%);
+               animation: subir .8s cubic-bezier(.3,1.4,.5,1) calc(.15s + var(--i) * .18s) forwards, quieto 3.2s ease-in-out calc(1.2s + var(--i) * .4s) infinite alternate;
+               filter: drop-shadow(0 18px 18px rgba(0,0,0,.35)); }
+  .equipo .yaya-h { left: 0; width: 41%; z-index: 3; }
+  .equipo .yayo-h { left: 31%; width: 36%; z-index: 2; }
+  .equipo .juku-h { right: -2%; width: 44%; z-index: 1; }
+  @media (max-width: 760px) { .equipo { aspect-ratio: 4 / 3; } }
+  @keyframes subir { to { opacity: 1; transform: none; } }
+  @keyframes quieto { from { translate: 0 0; } to { translate: 0 -6px; } }
+  @media (prefers-reduced-motion: reduce) { .equipo .p { animation: none; opacity: 1; transform: none; } }
 
-  .shots { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: 18px 14px; }
-  .shot { margin: 0; }
-  .shot img { display: block; width: 100%; height: auto; border-radius: 26px; border: 6px solid #0B1220; background: #0B1220; box-shadow: 0 14px 30px rgba(17,20,24,.18); }
-  .shot figcaption { margin-top: 10px; font-weight: 700; }
-  .shot figcaption span { display: block; font-weight: 400; color: var(--muted); font-size: 15px; }
-  .note { margin: 16px 0 0; color: var(--muted); font-size: 15px; }
+
   .hero .logo { font-size: clamp(64px, 16vw, 112px); }
   .hero h1 { font-size: clamp(28px, 5.5vw, 44px); line-height: 1.12; margin: 18px 0 0; max-width: 720px; font-weight: 900; }
   .badge { display: inline-block; margin-top: 22px; padding: 6px 14px; border-radius: 999px; background: rgba(255,255,255,.12); color: #fff; font-weight: 700; font-size: 15px; }
@@ -53,28 +52,277 @@
   main { padding: 48px 0 24px; }
   section { margin-bottom: 52px; }
   h2 { font-size: 28px; font-weight: 900; margin: 0 0 18px; }
-  .services { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-  .svc { border-radius: 20px; padding: 20px; color: #fff; min-height: 170px; display: flex; flex-direction: column; gap: 6px; }
-  .svc h3 { margin: 0; font-size: 24px; font-weight: 900; }
-  .svc p { margin: 0; opacity: .95; }
-  .svc .when { margin-top: auto; align-self: flex-start; padding: 3px 10px; border-radius: 999px; background: rgba(255,255,255,.2); font-size: 14px; font-weight: 700; }
-  .svc.later { background: #fff; color: var(--ink); border: 2px solid var(--line); }
-  .svc.later .when { background: var(--line); color: #1F2937; }
 
-  .who { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
-  .card { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 20px; }
-  .card h3 { margin: 0 0 6px; font-size: 21px; font-weight: 900; }
-  .card p { margin: 0; color: var(--muted); }
-
-  .city { background: #fff; border: 1px solid var(--line); border-radius: 20px; padding: 24px; }
-  .city p { margin: 0; color: var(--muted); }
-  .city strong { color: var(--ink); }
 
   footer { border-top: 1px solid var(--line); padding: 24px 0 40px; color: var(--muted); font-size: 15px; }
   footer .row { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 10px; }
   footer a { color: var(--navy); }
   footer .guest { color: #9CA3AF; text-decoration: none; font-size: 14px; }
   footer .guest:hover { color: var(--muted); text-decoration: underline; }
+
+  /* Servicios: un personaje por servicio */
+  .lead { margin: -8px 0 22px; color: var(--muted); font-size: 18px; }
+  .svc-nav { position: sticky; top: 10px; z-index: 5; display: flex; gap: 6px; overflow-x: auto; padding: 6px; margin: 0 0 44px; background: rgba(255,255,255,.88); backdrop-filter: blur(10px); border: 1px solid var(--line); border-radius: 999px; scrollbar-width: none; box-shadow: 0 10px 30px -18px rgba(17,20,24,.35); }
+  .svc-nav::-webkit-scrollbar { display: none; }
+  .svc-nav a { flex: 0 0 auto; display: flex; align-items: center; gap: 8px; padding: 8px 16px; border-radius: 999px; color: var(--ink); text-decoration: none; font: 800 15px Nunito, sans-serif; transition: background .3s, color .3s; }
+  .svc-nav a:hover { background: var(--ground); }
+  .svc-nav .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--c); transition: background .3s; }
+  .svc-nav a.active { background: var(--c); color: #fff; }
+  .svc-nav a.active .dot { background: #fff; }
+
+  .svc-row { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; margin-bottom: 80px; scroll-margin-top: 90px; }
+  .svc-row:nth-of-type(even) .art { order: 2; }
+
+  .svc-text { opacity: 0; transform: translateY(28px); transition: opacity .8s ease .15s, transform .8s ease .15s; }
+  .svc-text h3 { margin: 12px 0 0; font-size: clamp(30px, 4.5vw, 40px); font-weight: 900; line-height: 1.05; color: var(--c); }
+  .svc-text .tag { margin: 6px 0 10px; font: 900 21px/1.3 Nunito, sans-serif; color: var(--ink); }
+  .svc-text p { margin: 0 0 14px; color: var(--muted); }
+  .svc-text .when { display: inline-block; padding: 4px 12px; border-radius: 999px; background: var(--c); color: #fff; font-size: 14px; font-weight: 700; }
+  .svc-text .when.later { background: var(--tint); color: var(--c); }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 18px; }
+  .chips span { padding: 4px 12px; border-radius: 999px; background: var(--tint); color: var(--c); font-weight: 700; font-size: 15px; }
+  .mini { list-style: none; margin: 0 0 16px; padding: 0; display: grid; gap: 10px; }
+  .mini li { display: flex; align-items: center; gap: 12px; font-weight: 700; }
+  .mini b { flex: 0 0 auto; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; background: var(--c); color: #fff; font: 900 16px Nunito, sans-serif; }
+  .svc-text .extra { font-size: 15px; padding: 12px 16px; border-radius: 14px; background: #fff; border: 1px solid var(--line); }
+
+  /* ---- Servicios animados por capas (personajes y vehículos) ---- */
+  .art { position: relative; aspect-ratio: 5 / 4; border-radius: 32px; background: var(--tint); overflow: hidden; cursor: pointer; opacity: 0; transform: translateX(-40px); transition: opacity .8s ease, transform .8s ease; }
+  .svc-row:nth-of-type(even) .art { transform: translateX(40px); }
+  .svc-row.in .art, .svc-row.in .svc-text { opacity: 1; transform: none; }
+  .speed { position: absolute; left: 3%; height: 1.2%; border-radius: 9px; background: var(--c); opacity: 0; }
+  @keyframes rafaga { 0% { transform: translateX(60px); opacity: 0; } 30% { opacity: .5; } 100% { transform: translateX(-40px); opacity: 0; } }
+  @keyframes motor { from { transform: translateY(0); } to { transform: translateY(-0.5%); } }
+  /* objetos y burbujas */
+  .floaty { position: absolute; opacity: 0; scale: .3; transition: opacity .5s ease, scale .7s cubic-bezier(.3,1.6,.5,1); }
+  .play .floaty { opacity: 1; scale: 1; }
+  .floaty > * { animation: flotar 3.2s ease-in-out infinite alternate; }
+  @keyframes flotar { from { transform: translateY(0) rotate(-5deg); } to { transform: translateY(-14px) rotate(5deg); } }
+  .floaty svg { display: block; width: 100%; height: auto; filter: drop-shadow(0 8px 8px rgba(17,20,24,.15)); }
+  .bubble { background: #fff; color: var(--c); padding: 8px 14px; border-radius: 16px 16px 16px 4px; font: 700 15px 'Atkinson Hyperlegible', sans-serif; white-space: nowrap; box-shadow: 0 12px 24px -12px rgba(17,20,24,.35); }
+  .bubble b { font: 900 18px Nunito, sans-serif; }
+
+
+  /* ---- Líneas: micro aparte + Yayo con variantes ---- */
+  /* dos vehículos que se turnan: entra, se queda, sale; entra el otro (ciclo de 11 s) */
+  .veh { position: absolute; right: 2%; bottom: 12%; transform: translateX(-230%); }
+  .veh.v1 { width: 76%; aspect-ratio: 1755/682; }
+  .veh.v2 { width: 60%; aspect-ratio: 1769/810; right: 6%; }
+  .veh img.m { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .play .veh.v1 { animation: turno-a 11s cubic-bezier(.3,.7,.3,1) infinite; }
+  .play .veh.v2 { animation: turno-b 11s cubic-bezier(.3,.7,.3,1) infinite; }
+  @keyframes turno-a { 0% { transform: translateX(-230%); } 14% { transform: none; } 41% { transform: none; } 50%, 100% { transform: translateX(230%); } }
+  @keyframes turno-b { 0%, 50% { transform: translateX(-230%); } 64% { transform: none; } 91% { transform: none; } 100% { transform: translateX(230%); } }
+  .veh .motor2 { position: absolute; inset: 0; }
+  .play .veh .motor2 { animation: motor .16s linear infinite alternate; }
+  .rueda { position: absolute; }
+  .rueda .sq { position: absolute; top: 0; height: 100%; }
+  .rueda img { width: 100%; height: 100%; display: block; }
+  .play .v1 .rueda img { animation: giro-a 11s linear infinite; }
+  .play .v2 .rueda img { animation: giro-b 11s linear infinite; }
+  @keyframes giro-a { 0% { transform: rotate(0); } 14%, 41% { transform: rotate(1500deg); } 50%, 100% { transform: rotate(2400deg); } }
+  @keyframes giro-b { 0%, 50% { transform: rotate(0); } 64%, 91% { transform: rotate(1500deg); } 100% { transform: rotate(2400deg); } }
+
+  .yayo { position: absolute; left: 2%; bottom: 3%; height: 90%; aspect-ratio: 600/1026; transform-origin: 50% 100%; opacity: 0; transform: translateY(6%); }
+  .play .yayo { animation: aparecer .6s ease-out .2s forwards; }
+  @keyframes aparecer { to { opacity: 1; transform: none; } }
+  .yayo .cuerpo { position: absolute; inset: 0; transform-origin: 50% 100%; }
+  .play .yayo .cuerpo { animation: respirar 3s ease-in-out .8s infinite alternate; }
+  @keyframes respirar { from { transform: scaleY(1) rotate(0); } to { transform: scaleY(1.012) rotate(.5deg); } }
+  .yayo img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .yayo .g { opacity: 0; }
+  .play .yayo .g { animation: gesto-loop 11s ease infinite; }
+  .play .yayo .b { animation: gesto-loop-inv 11s ease infinite; }
+  @keyframes gesto-loop { 0%, 15%, 37%, 65%, 87%, 100% { opacity: 0; } 16%, 36%, 66%, 86% { opacity: 1; } }
+  @keyframes gesto-loop-inv { 0%, 15%, 37%, 65%, 87%, 100% { opacity: 1; } 16%, 36%, 66%, 86% { opacity: 0; } }
+  .art:hover .yayo .g, .art.tap .yayo .g { animation: gesto 2.8s ease; }
+  .art:hover .yayo .b, .art.tap .yayo .b { animation: gesto-inv 2.8s ease; }
+  @keyframes gesto { 0%, 100% { opacity: 0; } 6%, 92% { opacity: 1; } }
+  @keyframes gesto-inv { 0%, 100% { opacity: 1; } 6%, 92% { opacity: 0; } }
+  .yayo .o { opacity: 0; }
+  .play .yayo .o { animation: parpadeo-op 4.6s 3s infinite; }
+  @keyframes parpadeo-op { 0%, 93%, 100% { opacity: 0; } 94.5%, 97.5% { opacity: 1; } }
+
+
+  /* ---- Encomiendas: entra caminando y entrega la caja (cambio de pose) ---- */
+  .yayo2 { position: absolute; left: 50%; bottom: 4%; height: 90%; aspect-ratio: 903/1517; translate: -55% 0; }
+  .yayo2 .camina { position: absolute; inset: 0; transform: translateX(-160%); }
+  .play .yayo2 .camina { animation: caminar 1.5s ease-out forwards; }
+  @keyframes caminar {
+    0% { transform: translateX(-160%) translateY(0); } 12% { transform: translateX(-138%) translateY(-2.5%); }
+    25% { transform: translateX(-116%) translateY(0); } 37% { transform: translateX(-90%) translateY(-2.5%); }
+    50% { transform: translateX(-64%) translateY(0); } 62% { transform: translateX(-40%) translateY(-2.5%); }
+    75% { transform: translateX(-18%) translateY(0); } 88% { transform: translateX(-3%) translateY(-1.5%); }
+    100% { transform: none; } }
+  .yayo2 .cuerpo { position: absolute; inset: 0; transform-origin: 50% 100%; }
+  .play .yayo2 .cuerpo { animation: respirar 3s ease-in-out 1.6s infinite alternate; }
+  .yayo2 img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .yayo2 .e { opacity: 0; }
+  .play .yayo2 .e { animation: pose 2.8s 1.6s; }
+  .play .yayo2 .b { animation: pose-inv 2.8s 1.6s; }
+  .art:hover .yayo2 .e, .art.tap .yayo2 .e { animation: pose 2.8s; }
+  .art:hover .yayo2 .b, .art.tap .yayo2 .b { animation: pose-inv 2.8s; }
+  /* cambio de pose seco, con un pequeño "pop", como en los dibujos animados */
+  @keyframes pose { 0%, 100% { opacity: 0; } 2%, 94% { opacity: 1; } 2% { transform: scale(1.03); } 8% { transform: none; } }
+  @keyframes pose-inv { 0%, 100% { opacity: 1; } 2%, 94% { opacity: 0; } 96% { transform: scale(1.03); } }
+  .yayo2 .lids { position: absolute; inset: 0; }
+
+
+  /* ---- Taxi: Yaya parada + 3 vehículos que se turnan (12 s) ---- */
+  .veh3 { position: absolute; right: 2%; bottom: 10%; transform: translateX(-260%); }
+  .veh3 img.m { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .play .veh3.s0 { animation: t3a 12s cubic-bezier(.3,.7,.3,1) infinite; }
+  .play .veh3.s1 { animation: t3b 12s cubic-bezier(.3,.7,.3,1) infinite; }
+  .play .veh3.s2 { animation: t3c 12s cubic-bezier(.3,.7,.3,1) infinite; }
+  @keyframes t3a { 0% { transform: translateX(-260%); } 7%, 27% { transform: none; } 33.3%, 100% { transform: translateX(260%); } }
+  @keyframes t3b { 0%, 33.3% { transform: translateX(-260%); } 40.3%, 60.3% { transform: none; } 66.6%, 100% { transform: translateX(260%); } }
+  @keyframes t3c { 0%, 66.6% { transform: translateX(-260%); } 73.6%, 93.6% { transform: none; } 100% { transform: translateX(260%); } }
+  .veh3 .motor3 { position: absolute; inset: 0; transform-origin: 50% 100%; }
+  .play .veh3 .motor3 { animation: motor .15s linear infinite alternate; }
+  .play .veh3.s2 .rueda img { animation: giro3 12s linear infinite; }
+  @keyframes giro3 { 0%, 66.6% { transform: rotate(0); } 73.6%, 93.6% { transform: rotate(1440deg); } 100% { transform: rotate(2160deg); } }
+
+  .yaya3 { position: absolute; left: 3%; bottom: 3%; height: 90%; aspect-ratio: 971/1528; transform-origin: 50% 100%; opacity: 0; transform: translateY(6%); z-index: 2; }
+  .play .yaya3 { animation: aparecer .6s ease-out .2s forwards; }
+  .yaya3 .cuerpo { position: absolute; inset: 0; transform-origin: 50% 100%; }
+  .play .yaya3 .cuerpo { animation: respirar 3s ease-in-out .8s infinite alternate; }
+  .yaya3 img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .yaya3 .g, .yaya3 .o { opacity: 0; }
+  .play .yaya3 .g { animation: cel3 12s infinite; }
+  .play .yaya3 .b { animation: cel3-inv 12s infinite; }
+  @keyframes cel3 { 0%, 7.5%, 25.5%, 40.8%, 58.8%, 74.1%, 92.1%, 100% { opacity: 0; } 8%, 25%, 41.3%, 58.3%, 74.6%, 91.6% { opacity: 1; } }
+  @keyframes cel3-inv { 0%, 7.5%, 25.5%, 40.8%, 58.8%, 74.1%, 92.1%, 100% { opacity: 1; } 8%, 25%, 41.3%, 58.3%, 74.6%, 91.6% { opacity: 0; } }
+  .play .yaya3 .o { animation: parpadeo-op 4.2s 2.6s infinite; }
+
+
+  /* ---- Carga: Juku + camión y camioneta (11 s) ---- */
+  .veh4 { position: absolute; right: 1%; bottom: 10%; transform: translateX(-230%); }
+  .veh4 img.m { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .play .veh4.k0 { animation: t3a 12s cubic-bezier(.3,.7,.3,1) infinite; }
+  .play .veh4.k1 { animation: t3b 12s cubic-bezier(.3,.7,.3,1) infinite; }
+  .play .veh4.k2 { animation: t3c 12s cubic-bezier(.3,.7,.3,1) infinite; }
+  .veh4 .motor4 { position: absolute; inset: 0; }
+  .play .veh4 .motor4 { animation: motor .18s linear infinite alternate; }
+  .play .veh4.k0 .rueda img { animation: g4a 12s linear infinite; }
+  .play .veh4.k1 .rueda img { animation: g4b 12s linear infinite; }
+  .play .veh4.k2 .rueda img { animation: giro3 12s linear infinite; }
+  @keyframes g4a { 0% { transform: rotate(0); } 7%, 27% { transform: rotate(1440deg); } 33.3%, 100% { transform: rotate(2160deg); } }
+  @keyframes g4b { 0%, 33.3% { transform: rotate(0); } 40.3%, 60.3% { transform: rotate(1440deg); } 66.6%, 100% { transform: rotate(2160deg); } }
+  .juku { position: absolute; left: 1%; bottom: 3%; height: 92%; aspect-ratio: 1024/1536; z-index: 2; opacity: 0; transform: translateY(6%); }
+  .play .juku { animation: aparecer .6s ease-out .2s forwards; }
+  .juku .cuerpo { position: absolute; inset: 0; transform-origin: 50% 100%; }
+  .play .juku .cuerpo { animation: respirar 3.4s ease-in-out .8s infinite alternate; }
+  .juku img, .juku .g { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .juku .g, .juku .o { opacity: 0; }
+  .play .juku .g { animation: cel3 12s infinite; }
+  .play .juku .b { animation: cel3-inv 12s infinite; }
+  .play .juku .ob { animation: parpadeo-op 4.4s 2.4s infinite; }
+  .play .juku .og { animation: parpadeo-op 4.4s 2.4s infinite; }
+
+
+  /* ---- Delivery: Yaya parada + bici y moto (11 s) ---- */
+  .veh5 { position: absolute; right: 2%; bottom: 10%; transform: translateX(-230%); }
+  .veh5 img.m { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .play .veh5.d0 { animation: turno-a 11s cubic-bezier(.3,.7,.3,1) infinite; }
+  .play .veh5.d1 { animation: turno-b 11s cubic-bezier(.3,.7,.3,1) infinite; }
+  .veh5 .motor5 { position: absolute; inset: 0; }
+  .play .veh5 .motor5.on { animation: motor .14s linear infinite alternate; }
+  .play .speed.sp { animation: rafaga-loop 5.5s linear infinite; }
+  @keyframes rafaga-loop { 0% { transform: translateX(60px); opacity: 0; } 4% { opacity: .5; } 12%, 100% { transform: translateX(-40px); opacity: 0; } }
+  .yaya5 { position: absolute; left: 2%; bottom: 3%; height: 90%; aspect-ratio: 996/1536; z-index: 2; opacity: 0; transform: translateY(6%); }
+  .play .yaya5 { animation: aparecer .6s ease-out .2s forwards; }
+  .yaya5 .cuerpo { position: absolute; inset: 0; transform-origin: 50% 100%; }
+  .play .yaya5 .cuerpo { animation: respirar 3s ease-in-out .8s infinite alternate; }
+  .yaya5 img { position: absolute; inset: 0; width: 100%; height: 100%; }
+  .yaya5 .g, .yaya5 .o { opacity: 0; }
+  /* base -> intermedio -> entrega (y de vuelta), cuadros de ~110 ms como en dibujos animados */
+  .yaya5 .mid { opacity: 0; }
+  .play .yaya5 .b { animation: d5-base 11s steps(1, end) infinite; }
+  .play .yaya5 .mid { animation: d5-mid 11s steps(1, end) infinite; }
+  .play .yaya5 .g { animation: d5-ent 11s steps(1, end) infinite; }
+  @keyframes d5-base { 0% { opacity: 1; } 15% { opacity: 0; } 37% { opacity: 1; } 65% { opacity: 0; } 87% { opacity: 1; } }
+  @keyframes d5-mid  { 0% { opacity: 0; } 15% { opacity: 1; } 16% { opacity: 0; } 36% { opacity: 1; } 37% { opacity: 0; } 65% { opacity: 1; } 66% { opacity: 0; } 86% { opacity: 1; } 87% { opacity: 0; } }
+  @keyframes d5-ent  { 0% { opacity: 0; } 16% { opacity: 1; } 36% { opacity: 0; } 66% { opacity: 1; } 86% { opacity: 0; } }
+  .play .yaya5 .o { animation: parpadeo-op 4.2s 2.6s infinite; }
+
+  @media (max-width: 760px) {
+    .svc-row { grid-template-columns: 1fr; gap: 22px; margin-bottom: 60px; }
+    .svc-row:nth-of-type(even) .art { order: 0; }
+    .bubble { font-size: 13px; padding: 6px 10px; } .bubble b { font-size: 15px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .art, .art *, .svc-text { animation: none !important; transition: none !important; }
+    .art, .svc-text, .floaty, .yayo, .yaya3, .yaya5, .juku { opacity: 1 !important; transform: none !important; scale: 1 !important; }
+    .yayo2 .camina { transform: none !important; }
+    .veh.v1, .veh3.s0, .veh4.k0, .veh5.d0 { transform: none !important; }
+  }
+
+  /* ---- Fondo y secciones de abajo ---- */
+  body { background: var(--ground) radial-gradient(circle, rgba(27,42,71,.07) 1.2px, transparent 1.4px) 0 0 / 22px 22px; }
+  .rv { opacity: 0; transform: translateY(26px); transition: opacity .7s ease calc(var(--k, 0) * .12s), transform .7s cubic-bezier(.3,1.3,.5,1) calc(var(--k, 0) * .12s); }
+  .rv.in { opacity: 1; transform: none; }
+  .ico { display: grid; place-items: center; width: 48px; height: 48px; border-radius: 15px; background: var(--tint, #fff); color: var(--c, var(--navy)); }
+  .ico svg { width: 26px; height: 26px; }
+
+  .steps { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+  .steps::before { content: ""; position: absolute; left: 12%; right: 12%; top: 62px; border-top: 3px dashed #CBD5E1; z-index: 0; }
+  .step { position: relative; z-index: 1; background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 22px; box-shadow: 0 14px 30px -22px rgba(17,20,24,.35); }
+  .step .ico { background: color-mix(in srgb, var(--c) 12%, #fff); }
+  .step .n { position: absolute; top: 18px; right: 18px; width: 34px; height: 34px; border-radius: 50%; background: var(--c); color: #fff; display: grid; place-items: center; font: 900 18px Nunito, sans-serif; }
+  .step h3 { margin: 14px 0 4px; font-size: 21px; font-weight: 900; }
+  .step p { margin: 0; color: var(--muted); }
+
+  .banda { position: relative; overflow: hidden; background: var(--navy); color: #fff; padding: 64px 0 56px; margin: 0 0 64px; }
+  .banda::before, .banda::after { content: ""; position: absolute; border-radius: 50%; filter: blur(70px); opacity: .35; }
+  .banda::before { width: 360px; height: 360px; background: #F56300; top: -140px; right: -80px; }
+  .banda::after { width: 320px; height: 320px; background: #2563EB; bottom: -160px; left: -60px; }
+  .banda .wrap { position: relative; z-index: 1; }
+  .banda h2 { color: #fff; }
+  .lead2 { margin: -8px 0 8px; color: #C7D2E3; font-size: 18px; }
+  .shots { display: flex; justify-content: center; align-items: flex-end; gap: 0; padding: 40px 0 10px; }
+  .shot { --r: calc((var(--k) - 2) * 6deg); margin: 0 -14px; width: 19%; text-align: center; transform: translateY(calc(abs(var(--k) - 2) * 18px + 40px)); opacity: 0; transition: transform .9s cubic-bezier(.3,1.3,.5,1) calc(var(--k) * .1s), opacity .6s ease calc(var(--k) * .1s); }
+  .shot:nth-child(3) { z-index: 3; width: 22%; } .shot:nth-child(2), .shot:nth-child(4) { z-index: 2; }
+  .banda.in .shot { opacity: 1; transform: translateY(calc(abs(var(--k) - 2) * 18px)); }
+  .shot img { rotate: var(--r); }
+  .shot img { display: block; width: 100%; height: auto; border-radius: 26px; border: 6px solid #0B1220; background: #0B1220; box-shadow: 0 24px 40px -14px rgba(0,0,0,.6); transition: transform .4s ease; }
+  .shot:hover img { transform: translateY(-14px) scale(1.04); }
+  .shot figcaption { position: relative; z-index: 5; margin-top: 14px; padding: 0 16px; font: 900 15px Nunito, sans-serif; color: #fff; }
+  .shot:nth-child(3) figcaption { padding: 0 6px; }
+  .shot figcaption span { display: block; font: 400 13px/1.3 'Atkinson Hyperlegible', sans-serif; color: #C7D2E3; }
+  .note { margin: 28px 0 0; color: #93A3BC; font-size: 14px; text-align: center; }
+
+  .who { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+  @media (max-width: 900px) { .who { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 560px) { .who { grid-template-columns: 1fr; } }
+  .card { position: relative; overflow: hidden; background: #fff; border: 1px solid var(--line); border-radius: 22px; padding: 22px; transition: transform .3s ease, box-shadow .3s ease; }
+  .card::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 5px; background: var(--c); }
+  .card:hover { box-shadow: 0 20px 36px -22px rgba(17,20,24,.4); }
+  .card.in:hover { transform: translateY(-6px); }
+  .card h3 { margin: 14px 0 6px; font-size: 21px; font-weight: 900; }
+  .card p { margin: 0; color: var(--muted); }
+
+  .city { display: flex; gap: 18px; align-items: center; background: var(--navy); color: #fff; border-radius: 26px; padding: 26px 28px; --c: #fff; --tint: #F56300; }
+  .city .ico { flex: 0 0 auto; width: 64px; height: 64px; border-radius: 20px; }
+  .city .ico svg { width: 34px; height: 34px; animation: rebote 1.6s ease-in-out infinite; }
+  @keyframes rebote { 50% { transform: translateY(-5px); } }
+  .city h3 { margin: 0 0 4px; font-size: 22px; font-weight: 900; }
+  .city p { margin: 0; color: #C7D2E3; }
+  .city strong { color: #fff; }
+
+  @media (max-width: 760px) {
+    .steps { grid-template-columns: 1fr; }
+    .steps::before { left: 46px; right: auto; top: 30px; bottom: 30px; border-top: 0; border-left: 3px dashed #CBD5E1; }
+    .shots { justify-content: flex-start; overflow-x: auto; scroll-snap-type: x mandatory; gap: 16px; padding: 20px 4px 10px; scrollbar-width: none; }
+    .shots::-webkit-scrollbar { display: none; }
+    .shot, .shot:nth-child(3) { flex: 0 0 62%; width: auto; margin: 0; scroll-snap-align: center; }
+    .banda.in .shot, .shot { transform: none; } .shot img { rotate: none; } .shot figcaption { padding: 0; }
+    .city { flex-direction: column; align-items: flex-start; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .rv, .shot { opacity: 1 !important; transition: none !important; }
+    .rv { transform: none !important; }
+    .city .ico svg { animation: none; }
+  }
 </style>
 </head>
 <body>
@@ -88,91 +336,190 @@
     </div>
     <div class="hero">
       <div class="text">
-        <h1>Comida, taxi y camión en tu ciudad, desde una sola app.</h1>
+        <h1>Delivery, taxi, carga, líneas y encomiendas en tu ciudad, desde una sola app.</h1>
         <span class="badge">En desarrollo · empieza en San Julián, Santa Cruz</span>
       </div>
-      <div class="phone"><img src="pantallas/inicio.webp" alt="Pantalla de inicio de YaYa con las tarjetas de Delivery, Taxi, Transporte de carga, Líneas y Encomiendas" width="390" height="844"></div>
+      <div class="equipo" aria-hidden="true">
+        <img class="p juku-h" src="personajes/rig/carga/base.webp" alt="" width="620" height="930" style="--i:2">
+        <img class="p yayo-h" src="personajes/rig/lineas/base.webp" alt="" width="600" height="1026" style="--i:1">
+        <img class="p yaya-h" src="personajes/rig/delivery2/base.webp" alt="" width="600" height="925" style="--i:0">
+      </div>
     </div>
   </div>
 </header>
 
 <main>
   <div class="wrap">
-    <section>
+    <section class="svc-section">
       <h2>Lo que vas a poder pedir</h2>
-      <div class="services">
-        <div class="svc" style="background:var(--delivery)">
-          <h3>Delivery</h3>
-          <p>Comida, farmacias y mercados de tu zona, con un repartidor que te lo lleva.</p>
-          <span class="when">Al lanzar</span>
-        </div>
-        <div class="svc" style="background:var(--taxi)">
-          <h3>Taxi</h3>
-          <p>Mototaxi, torito o auto. Ofrecés tu precio, pedís al instante o reservás para más tarde.</p>
-          <span class="when">Al lanzar</span>
-        </div>
-        <div class="svc" style="background:var(--carga)">
-          <h3>Transporte de carga</h3>
-          <p>Publicás lo que querés mover y los transportistas te hacen su oferta.</p>
-          <span class="when">Al lanzar</span>
-        </div>
-        <div class="svc later">
-          <h3 style="color:var(--lineas)">Líneas</h3>
-          <p>Micros e interurbanos: reservás tu asiento y sabés cuándo sale.</p>
-          <span class="when">Después del lanzamiento</span>
-        </div>
-        <div class="svc later">
-          <h3 style="color:var(--encomiendas)">Encomiendas</h3>
-          <p>Paquetes en tu ciudad o a otra, de mano en mano y con código de entrega.</p>
-          <span class="when">Después del lanzamiento</span>
-        </div>
+      <p class="lead">Cinco servicios en una sola app. Tres llegan con el lanzamiento y dos más después.</p>
+      <nav class="svc-nav" aria-label="Servicios"><a href="#delivery" style="--c:#F56300"><span class="dot"></span>Delivery</a><a href="#taxi" style="--c:#2563EB"><span class="dot"></span>Taxi</a><a href="#carga" style="--c:#059669"><span class="dot"></span>Transporte de carga</a><a href="#lineas" style="--c:#7C3AED"><span class="dot"></span>Líneas</a><a href="#encomiendas" style="--c:#A0412D"><span class="dot"></span>Encomiendas</a></nav>
+
+    <article class="svc-row" id="delivery" style="--c:#F56300;--tint:#FFF1E8">
+      <div class="art" aria-hidden="true">
+      <span class="speed sp" style="left:40%;top:52%;width:9%"></span><span class="speed sp" style="left:40%;top:62%;width:7%;animation-delay:.25s"></span><span class="speed sp" style="left:40%;top:72%;width:10%;animation-delay:.4s"></span>
+      <div class="veh5 d0" style="width:58%;aspect-ratio:1536/897"><div class="motor5"><img class="m" src="personajes/rig/delivery2/bici.webp" alt=""></div></div>
+      <div class="veh5 d1" style="width:56%;aspect-ratio:1512/966"><div class="motor5 on"><img class="m" src="personajes/rig/delivery2/moto.webp" alt=""></div></div>
+      <div class="yaya5"><div class="cuerpo">
+        <img class="b" src="personajes/rig/delivery2/base.webp" alt="">
+        <img class="mid" src="personajes/rig/delivery2/medio.webp" alt="">
+        <img class="g" src="personajes/rig/delivery2/gesto.webp" alt="">
+        <img class="o" src="personajes/rig/delivery2/ojos.webp" alt="">
+      </div></div>
+      <div class="floaty" style="top:7%;right:5%;transition-delay:1.6s"><div class="bubble">¡Tu pedido, <b>ya!</b></div></div>
+      <div class="floaty" style="top:24%;right:30%;width:11%;transition-delay:1.8s"><svg viewBox="0 0 100 100"><path d="M15 50 Q15 16 50 16 Q85 16 85 50 Z" fill="#F4A93B"/><ellipse cx="38" cy="30" rx="3" ry="1.8" fill="#FFF3D6"/><ellipse cx="52" cy="25" rx="3" ry="1.8" fill="#FFF3D6"/><ellipse cx="64" cy="33" rx="3" ry="1.8" fill="#FFF3D6"/><rect x="11" y="49" width="78" height="9" rx="4.5" fill="#5BBF4A"/><path d="M13 57 H87 L80 66 L72 59 L62 67 L52 59 L42 67 L32 59 L22 66 Z" fill="#FFC83D"/><rect x="14" y="60" width="72" height="13" rx="6.5" fill="#6B3A1E"/><rect x="15" y="73" width="70" height="13" rx="6.5" fill="#E8923A"/></svg></div>
+      <div class="floaty" style="top:9%;right:44%;width:8%;transition-delay:2s"><svg viewBox="0 0 100 100"><path d="M10 72 Q10 28 50 28 Q90 28 90 72 Q50 80 10 72 Z" fill="#E9A23B"/><path d="M22 40 l5 -9 l5 9 l5 -9 l5 9 l5 -9 l5 9 l5 -9 l5 9 l5 -9 l5 9" fill="none" stroke="#C47A1E" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+    </div>
+      <div class="svc-text">
+        <span class="when">Al lanzar</span>
+        <h3>Delivery</h3>
+        <p class="tag">Lo que necesitás, hasta tu puerta.</p>
+        <p>Pedí comida, algo de la farmacia o lo que te falta del mercado de tu zona. Un repartidor lo recoge y te lo lleva.</p>
+        <div class="chips"><span>Comida</span><span>Farmacias</span><span>Mercados</span></div>
+        <ol class="mini"><li><b>1</b>Elegís el local y armás tu carrito</li><li><b>2</b>Ves el precio antes de confirmar</li><li><b>3</b>Seguís a tu repartidor hasta que llega</li></ol>
+        <p class="extra">¿No querés instalar nada? También vas a poder pedir por WhatsApp.</p>
       </div>
+    </article>
+    <article class="svc-row" id="taxi" style="--c:#2563EB;--tint:#EAF1FF">
+      <div class="art" aria-hidden="true">
+      <div class="veh3 s0" style="width:56%;aspect-ratio:1531/986"><div class="motor3"><img class="m" src="personajes/rig/taxi2/moto.webp" alt=""></div></div>
+      <div class="veh3 s1" style="width:54%;aspect-ratio:1525/1006"><div class="motor3"><img class="m" src="personajes/rig/taxi2/torito.webp" alt=""></div></div>
+      <div class="veh3 s2" style="width:62%;aspect-ratio:1771/764"><div class="motor3"><img class="m" src="personajes/rig/taxi2/auto.webp" alt="">
+        <span class="rueda" style="left:13.66%;top:66.36%;width:11.29%;height:26.18%"><span class="sq" style="width:100%;left:0"><img src="personajes/rig/taxi2/arueda1.webp" alt=""></span></span><span class="rueda" style="left:75.78%;top:66.36%;width:11.29%;height:26.18%"><span class="sq" style="width:100%;left:0"><img src="personajes/rig/taxi2/arueda2.webp" alt=""></span></span></div></div>
+      <div class="yaya3"><div class="cuerpo">
+        <img class="b" src="personajes/rig/taxi2/base.webp" alt="">
+        <img class="g" src="personajes/rig/taxi2/gesto.webp" alt="">
+        <img class="o" src="personajes/rig/taxi2/ojos.webp" alt="">
+      </div></div>
+      <div class="floaty" style="top:7%;right:5%;transition-delay:1.6s"><div class="bubble">Ofrezco <b>Bs 10</b></div></div>
+      <div class="floaty" style="top:24%;right:34%;width:12%;transition-delay:1.8s"><img src="personajes/rig/taxi2/casco.webp" alt="" style="display:block;width:100%;filter:drop-shadow(0 8px 8px rgba(17,20,24,.15))"></div>
+      <div class="floaty" style="top:9%;right:40%;width:6%;transition-delay:2s"><svg viewBox="0 0 100 100"><path d="M50 94 C22 64 16 52 16 38 a34 34 0 0 1 68 0 c0 14 -6 26 -34 56 Z" fill="#2563EB"/><circle cx="50" cy="38" r="13" fill="#fff"/></svg></div>
+    </div>
+      <div class="svc-text">
+        <span class="when">Al lanzar</span>
+        <h3>Taxi</h3>
+        <p class="tag">Vos ponés el precio.</p>
+        <p>Elegís cómo querés ir, ofrecés lo que querés pagar y un conductor cerca acepta tu viaje.</p>
+        <div class="chips"><span>Mototaxi</span><span>Torito</span><span>Auto</span></div>
+        <ol class="mini"><li><b>1</b>Elegís mototaxi, torito o auto</li><li><b>2</b>Ofrecés tu precio</li><li><b>3</b>Pedís al instante o reservás para más tarde</li></ol>
+        <p class="extra">Mientras esperás, ves quién viene y por dónde va.</p>
+      </div>
+    </article>
+    <article class="svc-row" id="carga" style="--c:#059669;--tint:#E8F7F0">
+      <div class="art" aria-hidden="true">
+      <div class="veh4 k0" style="width:70%;aspect-ratio:1732/763"><div class="motor4"><img class="m" src="personajes/rig/carga/camion.webp" alt="">
+        <span class="rueda" style="left:16.8%;top:66.06%;width:14.32%;height:32.5%"><span class="sq" style="width:100%;left:0"><img src="personajes/rig/carga/camion-r1.webp" alt=""></span></span><span class="rueda" style="left:71.25%;top:66.32%;width:14.32%;height:32.5%"><span class="sq" style="width:100%;left:0"><img src="personajes/rig/carga/camion-r2.webp" alt=""></span></span></div></div>
+      <div class="veh4 k1" style="width:68%;aspect-ratio:1771/785"><div class="motor4"><img class="m" src="personajes/rig/carga/pickup.webp" alt="">
+        <span class="rueda" style="left:12.99%;top:64.84%;width:14.46%;height:32.61%"><span class="sq" style="width:100%;left:0"><img src="personajes/rig/carga/pickup-r1.webp" alt=""></span></span><span class="rueda" style="left:75.1%;top:64.84%;width:14.46%;height:32.61%"><span class="sq" style="width:100%;left:0"><img src="personajes/rig/carga/pickup-r2.webp" alt=""></span></span></div></div>
+      <div class="veh4 k2" style="width:74%;aspect-ratio:1766/808"><div class="motor4"><img class="m" src="personajes/rig/carga/grande.webp" alt=""><span class="rueda" style="left:9.68%;top:73.76%;width:5.89%;height:12.87%"><span class="sq" style="width:100%;left:0"><img src="personajes/rig/carga/grande-r1.webp" alt=""></span></span><span class="rueda" style="left:18.86%;top:73.76%;width:5.89%;height:12.87%"><span class="sq" style="width:100%;left:0"><img src="personajes/rig/carga/grande-r2.webp" alt=""></span></span><span class="rueda" style="left:28.48%;top:73.76%;width:5.89%;height:12.87%"><span class="sq" style="width:100%;left:0"><img src="personajes/rig/carga/grande-r3.webp" alt=""></span></span><span class="rueda" style="left:71.63%;top:75.5%;width:7.7%;height:16.83%"><span class="sq" style="width:100%;left:0"><img src="personajes/rig/carga/grande-r4.webp" alt=""></span></span></div></div>
+      <div class="juku"><div class="cuerpo">
+        <img class="b" src="personajes/rig/carga/base.webp" alt="">
+        <img class="o ob" src="personajes/rig/carga/ojos.webp" alt="">
+        <div class="g"><img src="personajes/rig/carga/gesto.webp" alt=""><img class="o og" src="personajes/rig/carga/ojos2.webp" alt=""></div>
+      </div></div>
+      <div class="floaty" style="top:8%;right:5%;transition-delay:1.6s"><div class="bubble">Oferta <b>Bs 320</b></div></div>
+      <div class="floaty" style="top:22%;right:24%;transition-delay:1.9s"><div class="bubble">Oferta <b>Bs 350</b></div></div>
+    </div>
+      <div class="svc-text">
+        <span class="when">Al lanzar</span>
+        <h3>Transporte de carga</h3>
+        <p class="tag">¿Tenés algo grande que mover?</p>
+        <p>Soya, arena, una mudanza… Publicás lo que querés mover y los transportistas te hacen su oferta.</p>
+        <div class="chips"><span>Soya</span><span>Arena</span><span>Mudanzas</span></div>
+        <ol class="mini"><li><b>1</b>Publicás qué querés mover</li><li><b>2</b>Los transportistas te mandan su oferta</li><li><b>3</b>Elegís la que más te conviene</li></ol>
+        <p class="extra">Camioneros y transportistas trabajan desde la misma app, con los servicios que permite su vehículo.</p>
+      </div>
+    </article>
+    <article class="svc-row" id="lineas" style="--c:#7C3AED;--tint:#F3EEFF">
+      <div class="art" aria-hidden="true">
+      <div class="veh v1"><div class="motor2"><img class="m" src="personajes/rig/lineas/micro.webp" alt=""><span class="rueda" style="left:14.53%;top:72.29%;width:4.56%;height:17.01%"><span class="sq" style="width:144.9%;left:-22.5%;transform:scaleX(0.69)"><img src="personajes/rig/lineas/rueda1.webp" alt=""></span></span><span class="rueda" style="left:61.2%;top:73.75%;width:5.81%;height:18.48%"><span class="sq" style="width:123.5%;left:-11.7%;transform:scaleX(0.81)"><img src="personajes/rig/lineas/rueda2.webp" alt=""></span></span></div></div>
+      <div class="veh v2"><div class="motor2"><img class="m" src="personajes/rig/lineas/minibus.webp" alt=""><span class="rueda" style="left:12.32%;top:73.33%;width:6.56%;height:17.78%"><span class="sq" style="width:124.1%;left:-12.0%;transform:scaleX(0.806)"><img src="personajes/rig/lineas/vrueda1.webp" alt=""></span></span><span class="rueda" style="left:57.83%;top:74.94%;width:7.01%;height:18.77%"><span class="sq" style="width:122.5%;left:-11.3%;transform:scaleX(0.816)"><img src="personajes/rig/lineas/vrueda2.webp" alt=""></span></span></div></div>
+      <div class="yayo"><div class="cuerpo">
+        <img class="b" src="personajes/rig/lineas/base.webp" alt="">
+        <img class="g" src="personajes/rig/lineas/boleto.webp" alt="">
+        <img class="o" src="personajes/rig/lineas/ojos.webp" alt="">
+      </div></div>
+      <div class="floaty" style="top:8%;right:6%;transition-delay:1.9s"><div class="bubble">Sale <b>14:30</b></div></div>
+      <div class="floaty" style="top:24%;right:40%;width:9%;transition-delay:2.1s"><svg viewBox="0 0 100 100"><path d="M10 26 H90 V42 a8 8 0 0 0 0 16 V74 H10 V58 a8 8 0 0 0 0 -16 Z" fill="#FFD25A"/><path d="M68 30 V70" stroke="#B45309" stroke-width="3" stroke-dasharray="5 5"/><text x="38" y="58" text-anchor="middle" font-family="Nunito, sans-serif" font-weight="900" font-size="22" fill="#4C1D95">12</text></svg></div>
+    </div>
+      <div class="svc-text">
+        <span class="when later">Después del lanzamiento</span>
+        <h3>Líneas</h3>
+        <p class="tag">Tu asiento, guardado.</p>
+        <p>Micros e interurbanos: reservás tu asiento desde la app y sabés cuándo sale, sin ir a la parada a la suerte.</p>
+        <div class="chips"><span>Micros</span><span>Interurbanos</span></div>
+        <ol class="mini"><li><b>1</b>Elegís tu línea o interurbano</li><li><b>2</b>Reservás tu asiento</li><li><b>3</b>Sabés a qué hora sale</li></ol>
+        <p class="extra">Los sindicatos y asociaciones manejan sus conductores, turnos y rutas desde su propio panel.</p>
+      </div>
+    </article>
+    <article class="svc-row" id="encomiendas" style="--c:#A0412D;--tint:#FBEFEA">
+      <div class="art" aria-hidden="true">
+      <div class="yayo2"><div class="camina"><div class="cuerpo">
+        <img class="b" src="personajes/rig/encomiendas/base.webp" alt="">
+        <img class="e" src="personajes/rig/encomiendas/entrega.webp" alt="">
+        <div class="lids b">
+          <span class="lid" style="--piel:#FEA55E;left:31.01%;top:10.68%;width:5.98%;height:2.9%"></span>
+          <span class="lid" style="--piel:#FEA55E;left:40.2%;top:10.74%;width:3.43%;height:2.9%"></span>
+        </div>
+      </div></div></div>
+      <div class="floaty" style="top:9%;right:6%;transition-delay:1.7s"><div class="bubble">&#128274; Código <b>4827</b></div></div>
+      <div class="floaty" style="top:12%;left:8%;width:11%;transition-delay:1.9s"><svg viewBox="0 0 100 100"><rect x="10" y="24" width="80" height="54" rx="9" fill="#fff"/><path d="M14 30 L50 56 L86 30" stroke="#A0412D" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
+      <div class="floaty" style="bottom:14%;right:8%;width:9%;transition-delay:2.1s"><svg viewBox="0 0 100 100"><path d="M50 94 C22 64 16 52 16 38 a34 34 0 0 1 68 0 c0 14 -6 26 -34 56 Z" fill="#A0412D"/><circle cx="50" cy="38" r="13" fill="#fff"/></svg></div>
+    </div>
+      <div class="svc-text">
+        <span class="when later">Después del lanzamiento</span>
+        <h3>Encomiendas</h3>
+        <p class="tag">De mano en mano, con código.</p>
+        <p>Mandá paquetes dentro de tu ciudad o a otra. Tu encomienda pasa de mano en mano y se entrega con un código.</p>
+        <div class="chips"><span>En tu ciudad</span><span>A otra ciudad</span></div>
+        <ol class="mini"><li><b>1</b>Decís qué mandás y a dónde</li><li><b>2</b>Pasa de mano en mano hasta llegar</li><li><b>3</b>Se entrega con su código</li></ol>
+        <p class="extra">El código de entrega ayuda a que el paquete llegue a quien tiene que llegar.</p>
+      </div>
+    </article>
     </section>
 
-    <section>
+    <section class="como">
       <h2>Cómo funciona</h2>
       <div class="steps">
-        <div class="step"><div class="n">1</div><h3>Elegís qué necesitás</h3><p>Comida, un viaje o mover una carga. Ves el precio antes de confirmar.</p></div>
-        <div class="step"><div class="n">2</div><h3>Alguien cerca lo toma</h3><p>Un repartidor, un taxista o un transportista de tu zona acepta tu pedido.</p></div>
-        <div class="step"><div class="n">3</div><h3>Lo seguís hasta el final</h3><p>Ves quién viene y por dónde va, hasta que llega.</p></div>
+        <div class="step rv" style="--c:#F56300;--k:0"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="7" y="2" width="10" height="20" rx="2.5"/><path d="M11 18h2"/></svg></span><div class="n">1</div><h3>Elegís qué necesitás</h3><p>Comida, un viaje o mover una carga. Ves el precio antes de confirmar.</p></div>
+        <div class="step rv" style="--c:#2563EB;--k:1"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 13V5.5a1.5 1.5 0 0 1 3 0V11"/><path d="M11 10.5V4a1.5 1.5 0 0 1 3 0v6.5"/><path d="M14 10.5V6a1.5 1.5 0 0 1 3 0v8a6 6 0 0 1-6 6h-.5A5.5 5.5 0 0 1 5 15l-1.4-3a1.5 1.5 0 0 1 2.7-1.3L8 13"/></svg></span><div class="n">2</div><h3>Alguien cerca lo toma</h3><p>Un repartidor, un taxista o un transportista de tu zona acepta tu pedido.</p></div>
+        <div class="step rv" style="--c:#059669;--k:2"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span><div class="n">3</div><h3>Lo seguís hasta el final</h3><p>Ves quién viene y por dónde va, hasta que llega.</p></div>
       </div>
     </section>
+  </div>
 
-    <section>
+  <section class="banda">
+    <div class="wrap">
       <h2>Así se ve</h2>
+      <p class="lead2">Una sola app para todo. Así se ven algunas pantallas mientras la terminamos.</p>
       <div class="shots">
-        <figure class="shot"><img src="pantallas/delivery.webp" alt="Pantalla de un local de comida con su menú" width="390" height="844" loading="lazy"><figcaption>Delivery<span>El menú del local y tu carrito</span></figcaption></figure>
-        <figure class="shot"><img src="pantallas/taxi.webp" alt="Pantalla de Taxi para ofrecer el precio del viaje" width="390" height="844" loading="lazy"><figcaption>Taxi<span>Ofrecés tu precio para el viaje</span></figcaption></figure>
-        <figure class="shot"><img src="pantallas/carga.webp" alt="Pantalla de Carga con las ofertas de los transportistas" width="390" height="844" loading="lazy"><figcaption>Transporte de carga<span>Las ofertas de los transportistas</span></figcaption></figure>
-        <figure class="shot"><img src="pantallas/seguimiento.webp" alt="Pantalla de seguimiento del pedido" width="390" height="844" loading="lazy"><figcaption>Seguimiento<span>Por dónde va tu pedido</span></figcaption></figure>
+        <figure class="shot" style="--k:0"><img src="pantallas/delivery.webp" alt="Pantalla de un local de comida con su menú" width="390" height="844" loading="lazy"><figcaption>Delivery<span>El menú del local y tu carrito</span></figcaption></figure>
+        <figure class="shot" style="--k:1"><img src="pantallas/taxi.webp" alt="Pantalla de Taxi para ofrecer el precio del viaje" width="390" height="844" loading="lazy"><figcaption>Taxi<span>Ofrecés tu precio para el viaje</span></figcaption></figure>
+        <figure class="shot" style="--k:2"><img src="pantallas/inicio.webp" alt="Pantalla de inicio de YaYa con las tarjetas de Delivery, Taxi, Transporte de carga, Líneas y Encomiendas" width="390" height="844" loading="lazy"><figcaption>Inicio<span>Todos los servicios en una pantalla</span></figcaption></figure>
+        <figure class="shot" style="--k:3"><img src="pantallas/carga.webp" alt="Pantalla de Carga con las ofertas de los transportistas" width="390" height="844" loading="lazy"><figcaption>Transporte de carga<span>Las ofertas de los transportistas</span></figcaption></figure>
+        <figure class="shot" style="--k:4"><img src="pantallas/seguimiento.webp" alt="Pantalla de seguimiento del pedido" width="390" height="844" loading="lazy"><figcaption>Seguimiento<span>Por dónde va tu pedido</span></figcaption></figure>
       </div>
       <p class="note">Son diseños en desarrollo: los nombres de locales, precios y personas son de ejemplo.</p>
-    </section>
+    </div>
+  </section>
 
+  <div class="wrap">
     <section>
       <h2>Para todos los que mueven la ciudad</h2>
       <div class="who">
-        <div class="card">
-          <h3>Clientes</h3>
-          <p>Una sola cuenta y una sola libreta de direcciones para todo. También se puede pedir por WhatsApp.</p>
-        </div>
-        <div class="card">
-          <h3>Conductores</h3>
-          <p>Repartidores, mototaxistas y camioneros trabajan desde la misma app, en los servicios que permite su vehículo.</p>
-        </div>
-        <div class="card">
-          <h3>Negocios</h3>
-          <p>Restaurantes y tiendas reciben sus pedidos desde el navegador del celular, sin instalar nada más.</p>
-        </div>
-        <div class="card">
-          <h3>Sindicatos y asociaciones</h3>
-          <p>Manejan sus conductores, turnos y rutas desde su propio panel.</p>
-        </div>
+        <div class="card rv" style="--c:#F56300;--tint:#FFF1E8;--k:0"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8z"/><path d="M4 21a8 8 0 0 1 16 0"/></svg></span><h3>Clientes</h3><p>Una sola cuenta y una sola libreta de direcciones para todo. También se puede pedir por WhatsApp.</p></div>
+        <div class="card rv" style="--c:#2563EB;--tint:#EAF1FF;--k:1"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6" cy="17" r="3"/><circle cx="18" cy="17" r="3"/><path d="M9 17h6l-2-6h-3"/><path d="M15 11l2-3h2"/><path d="M6 17l3-6"/></svg></span><h3>Conductores</h3><p>Repartidores, mototaxistas y camioneros trabajan desde la misma app, en los servicios que permite su vehículo.</p></div>
+        <div class="card rv" style="--c:#059669;--tint:#E8F7F0;--k:2"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 10h16l-1.5-5h-13z"/><path d="M5 10v10h14V10"/><path d="M10 20v-5h4v5"/></svg></span><h3>Negocios</h3><p>Restaurantes y tiendas reciben sus pedidos desde el navegador del celular, sin instalar nada más.</p></div>
+        <div class="card rv" style="--c:#7C3AED;--tint:#F3EEFF;--k:3"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M2 20a6 6 0 0 1 12 0"/><path d="M10 20a6 6 0 0 1 12 0"/></svg></span><h3>Sindicatos y asociaciones</h3><p>Manejan sus conductores, turnos y rutas desde su propio panel.</p></div>
       </div>
     </section>
 
-    <section class="city">
-      <p><strong>Hecha para pueblos y ciudades de Bolivia.</strong> Empieza en San Julián, Santa Cruz, y está pensada para sumar más ciudades. Todavía no está publicada: estamos terminando los diseños con gente de la zona.</p>
+    <section class="city rv">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
+      <div>
+        <h3>Hecha para pueblos y ciudades de Bolivia</h3>
+        <p>Empieza en <strong>San Julián, Santa Cruz</strong>, y está pensada para sumar más ciudades. Todavía no está publicada: estamos terminando los diseños con gente de la zona.</p>
+      </div>
     </section>
   </div>
 </main>
@@ -183,5 +530,24 @@
     <a class="guest" href="https://pruebas.remanso.info">Acceso para invitados</a>
   </div>
 </footer>
+<script>
+  // Servicios: aparecen al bajar y se marca el servicio activo arriba
+  const rows = document.querySelectorAll('.svc-row');
+  const reveal = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('in', 'play'); reveal.unobserve(e.target); }
+  }), { threshold: 0.25 });
+  rows.forEach(r => reveal.observe(r));
+  const links = document.querySelectorAll('.svc-nav a');
+  const spy = new IntersectionObserver(entries => entries.forEach(e => {
+    if (!e.isIntersecting) return;
+    links.forEach(a => a.classList.toggle('active', a.getAttribute('href') === '#' + e.target.id));
+  }), { rootMargin: '-45% 0px -50% 0px' });
+  rows.forEach(r => spy.observe(r));
+  // tocar una tarjeta en el celular repite el gesto
+  document.querySelectorAll('.art').forEach(a => a.addEventListener('click', () => { a.classList.remove('tap'); void a.offsetWidth; a.classList.add('tap'); }));
+  // secciones de abajo: aparecen al bajar
+  const rv = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); rv.unobserve(e.target); } }), { threshold: .2 });
+  document.querySelectorAll('.rv, .banda').forEach(el => rv.observe(el));
+</script>
 </body>
 </html>
